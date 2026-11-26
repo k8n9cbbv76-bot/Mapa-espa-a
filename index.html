@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mapa de España interactivo</title>
+  <meta name="description" content="Explora las 17 comunidades autónomas, las 2 ciudades autónomas y las 50 provincias de España: fichas, comparador, mapas de colores y juego. Datos del INE.">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23c8102e'/%3E%3Crect y='9' width='32' height='14' fill='%23fcdd09'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    // Aplica el tema guardado antes de pintar, para evitar parpadeos
+    try { const t = localStorage.getItem("tema"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#panel">Saltar al panel de información</a>
+
+  <header class="cabecera">
+    <div class="marca">
+      <span class="marca-logo" aria-hidden="true"></span>
+      <div>
+        <h1>Mapa de España</h1>
+        <p>Comunidades y provincias</p>
+      </div>
+    </div>
+    <nav class="pestanas" role="tablist" aria-label="Secciones">
+      <button role="tab" data-tab="explorar" aria-selected="true"><span aria-hidden="true">🧭</span> Explorar</button>
+      <button role="tab" data-tab="colorear" aria-selected="false"><span aria-hidden="true">🎨</span> Colorear</button>
+      <button role="tab" data-tab="comparar" aria-selected="false"><span aria-hidden="true">⚖️</span> Comparar</button>
+      <button role="tab" data-tab="jugar" aria-selected="false"><span aria-hidden="true">🎮</span> Jugar</button>
+    </nav>
+    <button class="btn-icono" id="btn-tema" aria-label="Cambiar entre modo claro y oscuro" title="Modo claro / oscuro">
+      <svg class="ico-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg>
+      <svg class="ico-luna" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+    </button>
+  </header>
+
+  <main class="layout">
+    <section class="mapa-zona" aria-label="Mapa">
+      <div class="migas" id="migas"></div>
+      <div class="mapa" id="mapa">
+        <div class="controles-zoom" role="group" aria-label="Zoom del mapa">
+          <button class="btn-icono" id="zoom-mas" aria-label="Acercar">+</button>
+          <button class="btn-icono" id="zoom-menos" aria-label="Alejar">−</button>
+          <button class="btn-icono" id="zoom-reset" aria-label="Ver toda España">⟲</button>
+        </div>
+      </div>
+      <div class="leyenda" id="leyenda" hidden></div>
+      <div class="hud" id="hud" hidden></div>
+    </section>
+
+    <aside class="panel" id="panel" tabindex="-1" aria-live="polite">
+      <button class="panel-asa" id="panel-asa" aria-label="Expandir o contraer el panel"><span></span></button>
+      <div class="panel-contenido" id="panel-contenido"></div>
+    </aside>
+  </main>
+
+  <footer class="pie">
+    <p>
+      <strong>Fuentes:</strong>
+      Población: <a href="https://www.ine.es/" target="_blank" rel="noopener">INE — Instituto Nacional de Estadística</a>,
+      <em>Cifras oficiales de población resultantes de la revisión del Padrón municipal</em> a <span id="fecha-ine">1 de enero</span>
+      (descargadas de la <a href="https://servicios.ine.es/wstempus/js/ES/TABLAS_OPERACION/22" target="_blank" rel="noopener">API JSON del INE</a>).
+      Superficies: IGN / INE (Anuario Estadístico de España).
+      Fronteras: <a href="https://centrodedescargas.cnig.es/" target="_blank" rel="noopener">IGN – CNIG, Líneas límite</a> vía
+      <a href="https://github.com/martgnz/es-atlas" target="_blank" rel="noopener">es-atlas</a>.
+      Patrimonio: <a href="https://whc.unesco.org/es/list/" target="_blank" rel="noopener">UNESCO</a>.
+      Estatutos: <a href="https://www.boe.es/" target="_blank" rel="noopener">BOE</a>.
+      Banderas y escudos: dibujos simplificados con fines educativos.
+    </p>
+  </footer>
+
+  <!-- Librerías (copiadas en el proyecto para que funcione sin conexión) -->
+  <script src="js/vendor/d3.min.js"></script>
+  <script src="js/vendor/topojson-client.min.js"></script>
+  <!-- Datos -->
+  <script src="data/geo.js"></script>
+  <script src="data/ine.js"></script>
+  <script src="data/comunidades.js"></script>
+  <script src="data/provincias.js"></script>
+  <!-- Aplicación -->
+  <script src="js/datos.js"></script>
+  <script src="js/simbolos.js"></script>
+  <script src="js/mapa.js"></script>
+  <script src="js/fichas.js"></script>
+  <script src="js/colores.js"></script>
+  <script src="js/comparador.js"></script>
+  <script src="js/juego.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

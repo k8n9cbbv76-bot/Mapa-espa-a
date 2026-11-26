@@ -1,0 +1,13 @@
+{
+  "name": "mapa-espana",
+  "version": "1.0.0",
+  "description": "Web interactiva sobre las comunidades autónomas y provincias de España para estudiantes",
+  "private": true,
+  "scripts": {
+    "datos": "bash scripts/descargar-ine.sh && node scripts/build-data.js",
+    "build": "node scripts/build-data.js",
+    "test": "node tests/prueba.js",
+    "start": "python3 -m http.server 8000"
+  },
+  "license": "MIT"
+}
