@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "datos": "bash scripts/descargar-ine.sh && node scripts/build-data.js",
-    "build": "node scripts/build-data.js",
+    "build": "node scripts/build-data.js && node scripts/build-standalone.js",
     "test": "node tests/prueba.js",
     "start": "python3 -m http.server 8000"
   },

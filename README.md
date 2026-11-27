@@ -4,9 +4,13 @@ Web educativa para estudiantes sobre las **17 comunidades autónomas**, las **2 
 
 ## Cómo abrirla
 
-**Opción 1 – Doble clic (la más sencilla).**
-Descarga o clona el proyecto y abre `index.html` con Chrome, Firefox, Edge o Safari.
-Funciona sin internet: D3, los mapas y los datos están incluidos en el proyecto (solo la tipografía se descarga de Google Fonts si hay conexión).
+**Opción 1 – Un solo archivo (la más sencilla).**
+Descarga **`mapa-espana.html`** y ábrelo con doble clic en Chrome, Firefox, Edge o Safari.
+Lleva todo dentro (estilos, D3, mapas y datos), así que funciona aunque lo copies suelto, lo envíes por correo o no haya internet.
+
+**Opción 1 bis – Proyecto completo.**
+Si descargas el ZIP del repositorio, **descomprímelo primero** (en Windows: clic derecho → *Extraer todo…*) y abre `index.html` desde la carpeta extraída.
+⚠️ Si abres `index.html` sin descomprimir, desde dentro del ZIP, la página sale vacía porque el navegador no encuentra los demás archivos.
 
 **Opción 2 – Servidor local** (recomendado si vas a modificar el código):
 
@@ -43,12 +47,14 @@ También: modo oscuro (automático o con el botón ☀/☾), diseño adaptado a 
 ```bash
 bash scripts/descargar-ine.sh   # descarga las 52 tablas provinciales del INE
 node scripts/build-data.js      # regenera data/ine.js y data/geo.js
+node scripts/build-standalone.js  # regenera mapa-espana.html
 ```
 
 ## Estructura del proyecto
 
 ```
 index.html              Página principal
+mapa-espana.html        La misma web en un solo archivo (generado con scripts/build-standalone.js)
 css/styles.css          Estilos (tema claro/oscuro, móvil)
 js/
   vendor/               D3 v7.9 y topojson-client (copiados para funcionar sin conexión)
